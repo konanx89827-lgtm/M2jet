@@ -1,1 +1,267 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M2JET - Admin Panel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0a0a15; color: #e4e4e7; min-height: 100vh; }
+  .hidden { display: none!important; }
 
+    /* GİRİŞ EKRANI */
+  .login-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+  .login-box { background: #13131f; border: 2px solid #dc2626; border-radius: 20px; padding: 48px 40px; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(220,38,38,0.3); }
+  .logo { text-align: center; font-size: 42px; font-weight: 900; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+  .subtitle { text-align: center; color: #71717a; margin-bottom: 32px; }
+  .form-group { margin-bottom: 20px; }
+    label { display: block; font-weight: 600; color: #9ca3af; margin-bottom: 8px; font-size: 14px; }
+    input, textarea { width: 100%; padding: 14px; background: #0a0a15; border: 2px solid #252538; border-radius: 10px; color: #e4e4e7; font-size: 15px; font-family: inherit; }
+    input:focus, textarea:focus { outline: none; border-color: #dc2626; }
+  .btn-login { width: 100%; padding: 14px; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; transition: 0.2s; }
+  .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(220,38,38,0.5); }
+  .error { background: #7f1d1d; color: #fecaca; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; display: none; }
+
+    /* ADMİN PANEL */
+  .navbar { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+  .brand { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+  .badge { background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+  .navbar-left { display: flex; align-items: center; gap: 16px; }
+  .navbar-right { display: flex; gap: 12px; }
+  .btn { padding: 9px 20px; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; cursor: pointer; font-weight: 700; text-decoration: none; font-size: 14px; transition: 0.2s; }
+  .btn:hover { background: rgba(255,255,255,0.3); }
+  .btn-download { background: linear-gradient(135deg, #16a34a, #15803d)!important; border-color: rgba(255,255,255,0.4)!important; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+  .page-title { font-size: 32px; font-weight: 800; margin-bottom: 16px; color: #fff; }
+  .page-desc { color: #71717a; margin-bottom: 32px; font-size: 15px; }
+  .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
+  .admin-card { background: #13131f; border: 1px solid #252538; border-radius: 16px; padding: 24px; }
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #252538; }
+  .card-icon { width: 44px; height: 44px; background: linear-gradient(135deg, #dc2626, #991b1b); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .card-title { font-size: 18px; font-weight: 700; color: #fff; }
+  .btn-save { width: 100%; padding: 12px; background: linear-gradient(135deg, #dc2626, #991b1b); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: 0.2s; }
+  .btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(220,38,38,0.4); }
+  .item-list { margin-top: 16px; max-height: 200px; overflow-y: auto; }
+  .item { background: #0a0a15; padding: 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+  .btn-delete { padding: 6px 12px; background: #7f1d1d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-delete:hover { background: #991b1b; }
+  .success { background: #14532d; color: #86efac; padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; display: none; }
+    @media (max-width: 768px) {.admin-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <!-- GİRİŞ EKRANI -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-box">
+      <div class="logo">M2JET</div>
+      <div class="subtitle">Admin Panel Girişi</div>
+      <div id="errorMsg" class="error"></div>
+      <form onsubmit="girisYap(event)">
+        <div class="form-group">
+          <label>E-posta</label>
+          <input type="email" id="email" placeholder="admin@m2jet.com" required>
+        </div>
+        <div class="form-group">
+          <label>Şifre</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-login">Giriş Yap</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMİN PANEL -->
+  <div id="adminPanel" class="hidden">
+    <nav class="navbar">
+      <div class="navbar-left">
+        <div class="brand">M2JET</div>
+        <div class="badge">ADMIN</div>
+      </div>
+      <div class="navbar-right">
+        <button onclick="siteyiIndir()" class="btn btn-download">⬇️ SİTEYİ İNDİR</button>
+        <button onclick="cikisYap()" class="btn">Çıkış</button>
+      </div>
+    </nav>
+    <div class="container">
+      <h1 class="page-title">⚙️ Admin Panel</h1>
+      <p class="page-desc">Düzenle → Kaydet → "SİTEYİ İNDİR" → İnen dashboard.html dosyasını GitHub'a yükle</p>
+      <div class="admin-grid">
+        <div class="admin-card">
+          <div class="card-header">
+            <div class="card-icon">📱</div>
+            <div class="card-title">Sosyal Medya Linkleri</div>
+          </div>
+          <div id="socialSuccess" class="success"></div>
+          <div class="form-group"><label>Facebook</label><input type="url" id="facebook" placeholder="https://facebook.com/m2jet"></div>
+          <div class="form-group"><label>Instagram</label><input type="url" id="instagram" placeholder="https://instagram.com/m2jet"></div>
+          <div class="form-group"><label>TikTok</label><input type="url" id="tiktok" placeholder="https://tiktok.com/@m2jet"></div>
+          <div class="form-group"><label>YouTube</label><input type="url" id="youtube" placeholder="https://youtube.com/@m2jet"></div>
+          <div class="form-group"><label>Discord</label><input type="url" id="discord" placeholder="https://discord.gg/m2jet"></div>
+          <button class="btn-save" onclick="kaydetSosyal()">💾 Kaydet</button>
+        </div>
+        <div class="admin-card">
+          <div class="card-header">
+            <div class="card-icon">📢</div>
+            <div class="card-title">Duyuru Yönetimi</div>
+          </div>
+          <div id="duyuruSuccess" class="success"></div>
+          <div class="form-group"><label>Duyuru Başlığı</label><input type="text" id="duyuruBaslik" placeholder="Yeni Event!"></div>
+          <div class="form-group"><label>Duyuru İçeriği</label><textarea id="duyuruIcerik" style="min-height: 80px;" placeholder="Etkinlik detayları..."></textarea></div>
+          <button class="btn-save" onclick="ekleDuyuru()">➕ Duyuru Ekle</button>
+          <div class="item-list" id="duyuruListesi"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_EMAIL = 'admin@m2jet.com';
+    const ADMIN_SIFRE = 'M2jet2024!';
+
+    // Sayfa yüklenince giriş kontrolü
+    if (localStorage.getItem('admin_giris') === 'true') {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('adminPanel').classList.remove('hidden');
+      yukleVeriler();
+    }
+
+    function girisYap(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const sifre = document.getElementById('password').value;
+      if (email === ADMIN_EMAIL && sifre === ADMIN_SIFRE) {
+        localStorage.setItem('admin_giris', 'true');
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('adminPanel').classList.remove('hidden');
+        yukleVeriler();
+      } else {
+        const err = document.getElementById('errorMsg');
+        err.textContent = 'E-posta veya şifre hatalı!';
+        err.style.display = 'block';
+        setTimeout(() => err.style.display = 'none', 3000);
+      }
+    }
+
+    function cikisYap() {
+      localStorage.removeItem('admin_giris');
+      location.reload();
+    }
+
+    function kaydetSosyal() {
+      const sosyal = {
+        facebook: document.getElementById('facebook').value,
+        instagram: document.getElementById('instagram').value,
+        tiktok: document.getElementById('tiktok').value,
+        youtube: document.getElementById('youtube').value,
+        discord: document.getElementById('discord').value
+      };
+      localStorage.setItem('m2jet_social', JSON.stringify(sosyal));
+      goster('socialSuccess', '✅ Kaydedildi! İndir butonuna bas');
+    }
+
+    function yukleVeriler() {
+      const s = JSON.parse(localStorage.getItem('m2jet_social') || '{}');
+      document.getElementById('facebook').value = s.facebook || '';
+      document.getElementById('instagram').value = s.instagram || '';
+      document.getElementById('tiktok').value = s.tiktok || '';
+      document.getElementById('youtube').value = s.youtube || '';
+      document.getElementById('discord').value = s.discord || '';
+      listeleDuyurular();
+    }
+
+    function ekleDuyuru() {
+      const b = document.getElementById('duyuruBaslik').value;
+      const i = document.getElementById('duyuruIcerik').value;
+      if (!b ||!i) {
+        alert('Başlık ve içerik boş olamaz!');
+        return;
+      }
+      let d = JSON.parse(localStorage.getItem('m2jet_duyurular') || '[]');
+      d.unshift({
+        id: Date.now(),
+        baslik: b,
+        icerik: i,
+        tarih: new Date().toLocaleDateString('tr-TR')
+      });
+      localStorage.setItem('m2jet_duyurular', JSON.stringify(d));
+      document.getElementById('duyuruBaslik').value = '';
+      document.getElementById('duyuruIcerik').value = '';
+      goster('duyuruSuccess', '✅ Eklendi! İndir butonuna bas');
+      listeleDuyurular();
+    }
+
+    function listeleDuyurular() {
+      const d = JSON.parse(localStorage.getItem('m2jet_duyurular') || '[]');
+      document.getElementById('duyuruListesi').innerHTML = d.map(x => `
+        <div class="item">
+          <span>${x.baslik}</span>
+          <button class="btn-delete" onclick="silDuyuru(${x.id})">Sil</button>
+        </div>
+      `).join('');
+    }
+
+    function silDuyuru(id) {
+      let d = JSON.parse(localStorage.getItem('m2jet_duyurular') || '[]');
+      d = d.filter(x => x.id!== id);
+      localStorage.setItem('m2jet_duyurular', JSON.stringify(d));
+      listeleDuyurular();
+    }
+
+    function goster(id, txt) {
+      const m = document.getElementById(id);
+      m.textContent = txt;
+      m.style.display = 'block';
+      setTimeout(() => m.style.display = 'none', 3000);
+    }
+
+    function siteyiIndir() {
+      const sosyal = JSON.parse(localStorage.getItem('m2jet_social') || '{}');
+      const duyurular = JSON.parse(localStorage.getItem('m2jet_duyurular') || '[]');
+      const html = `<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M2JET Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0a0a15; color: #e4e4e7; padding: 40px; }
+    h1 { color: #dc2626; }
+   .social { margin: 20px 0; }
+   .social a { color: #dc2626; display: block; margin: 8px 0; }
+   .duyuru { background: #13131f; padding: 16px; margin: 12px 0; border-radius: 8px; border: 1px solid #252538; }
+   .duyuru h3 { color: #dc2626; margin: 0 0 8px 0; }
+   .duyuru small { color: #71717a; }
+  </style>
+</head>
+<body>
+  <h1>M2JET Dashboard</h1>
+  <div class="social">
+    <h2>Sosyal Medya</h2>
+    ${sosyal.facebook? `<a href="${sosyal.facebook}">Facebook</a>` : ''}
+    ${sosyal.instagram? `<a href="${sosyal.instagram}">Instagram</a>` : ''}
+    ${sosyal.tiktok? `<a href="${sosyal.tiktok}">TikTok</a>` : ''}
+    ${sosyal.youtube? `<a href="${sosyal.youtube}">YouTube</a>` : ''}
+    ${sosyal.discord? `<a href="${sosyal.discord}">Discord</a>` : ''}
+  </div>
+  <h2>Duyurular</h2>
+  ${duyurular.map(d => `
+    <div class="duyuru">
+      <h3>${d.baslik}</h3>
+      <p>${d.icerik}</p>
+      <small>${d.tarih}</small>
+    </div>
+  `).join('')}
+  <p style="margin-top: 40px; color: #71717a;">Bu dosyayı dashboard.html olarak GitHub'a yükle</p>
+</body>
+</html>`;
+      const blob = new Blob([html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'dashboard.html';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
