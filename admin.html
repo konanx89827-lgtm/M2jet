@@ -78,6 +78,18 @@ input:focus,textarea:focus{outline:none;border-color:#dc2626}
 <div class="admin-grid">
 <div class="admin-card">
 <div class="card-header">
+<div class="card-icon">🌐</div>
+<div class="card-title">Ana Site Linki</div>
+</div>
+<div id="siteSuccess" class="success"></div>
+<div class="form-group">
+<label>Ana Sayfa URL</label>
+<input type="url" id="siteUrl" placeholder="https://konanx89827-lgtm.github.io/M2jet/">
+</div>
+<button class="btn-save" onclick="kaydetSite()">💾 Kaydet</button>
+</div>
+<div class="admin-card">
+<div class="card-header">
 <div class="card-icon">📱</div>
 <div class="card-title">Sosyal Medya Linkleri</div>
 </div>
@@ -137,6 +149,11 @@ localStorage.removeItem('admin_giris');
 location.reload();
 }
 
+function kaydetSite(){
+localStorage.setItem('m2jet_site',document.getElementById('siteUrl').value);
+goster('siteSuccess','✅ Site linki kaydedildi!');
+}
+
 function kaydetSosyal(){
 var sosyal={
 facebook:document.getElementById('facebook').value,
@@ -150,6 +167,7 @@ goster('socialSuccess','✅ Kaydedildi! KODU KOPYALA butonuna bas');
 }
 
 function yukleVeriler(){
+document.getElementById('siteUrl').value=localStorage.getItem('m2jet_site')||'https://konanx89827-lgtm.github.io/M2jet/';
 var s=JSON.parse(localStorage.getItem('m2jet_social')||'{}');
 document.getElementById('facebook').value=s.facebook||'';
 document.getElementById('instagram').value=s.instagram||'';
@@ -194,16 +212,18 @@ setTimeout(function(){el.style.display='none'},3000);
 }
 
 function koduGoster(){
+var siteUrl=localStorage.getItem('m2jet_site')||'https://konanx89827-lgtm.github.io/M2jet/';
 var s=JSON.parse(localStorage.getItem('m2jet_social')||'{}');
 var d=JSON.parse(localStorage.getItem('m2jet_duyurular')||'[]');
-var html='<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>M2JET</title><style>body{font-family:Arial;background:#0a0a15;color:#fff;padding:20px}.card{background:#13131f;padding:20px;border-radius:12px;margin:16px 0}a{color:#dc2626;text-decoration:none;margin-right:12px}</style></head><body><h1>M2JET</h1><div class="card"><h2>Sosyal Medya</h2>';
+var html='<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>M2JET</title><style>body{font-family:Arial;background:#0a0a15;color:#fff;padding:20px;margin:0}.header{text-align:center;padding:40px 20px;background:#13131f}.header h1{font-size:42px;color:#dc2626;margin:0 0 16px 0}.btn-site{display:inline-block;padding:16px 40px;background:#dc2626;color:white;text-decoration:none;border-radius:12px;font-weight:700;font-size:18px;margin-top:16px}.card{background:#13131f;padding:24px;border-radius:12px;margin:20px auto;max-width:800px}.card h2{color:#dc2626;margin:0 0 16px 0}a{color:#dc2626;text-decoration:none;margin-right:16px;font-weight:600}.duyuru{margin:16px 0;padding:16px;background:#0a0a15;border-radius:8px;border-left:4px solid #dc2626}</style></head><body><div class="header"><h1>M2JET</h1><a href="'+siteUrl+'" class="btn-site">🏠 Ana Sayfaya Git</a></div><div class="card"><h2>📱 Sosyal Medya</h2>';
 if(s.facebook)html+='<a href="'+s.facebook+'" target="_blank">Facebook</a>';
 if(s.instagram)html+='<a href="'+s.instagram+'" target="_blank">Instagram</a>';
 if(s.tiktok)html+='<a href="'+s.tiktok+'" target="_blank">TikTok</a>';
 if(s.youtube)html+='<a href="'+s.youtube+'" target="_blank">YouTube</a>';
 if(s.discord)html+='<a href="'+s.discord+'" target="_blank">Discord</a>';
-html+='</div><div class="card"><h2>Duyurular</h2>';
-d.forEach(function(x){html+='<div style="margin:12px 0;padding:12px;background:#0a0a15;border-radius:8px"><b>'+x.baslik+'</b><p>'+x.icerik+'</p><small>'+x.tarih+'</small></div>'});
+html+='</div><div class="card"><h2>📢 Duyurular</h2>';
+if(d.length===0){html+='<p style="color:#71717a">Henüz duyuru yok.</p>'}
+else{d.forEach(function(x){html+='<div class="duyuru"><b>'+x.baslik+'</b><p>'+x.icerik+'</p><small style="color:#71717a">'+x.tarih+'</small></div>'})}
 html+='</div></body></html>';
 document.getElementById('codeBox').textContent=html;
 document.getElementById('codeBox').style.display='block';
