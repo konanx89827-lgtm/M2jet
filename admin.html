@@ -1,106 +1,222 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M2JET - Admin Panel</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0a0a15; color: #e4e4e7; min-height: 100vh; }
-  .hidden { display: none!important; }
-  .login-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-  .login-box { background: #13131f; border: 2px solid #dc2626; border-radius: 20px; padding: 48px 40px; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(220,38,38,0.3); }
-  .logo { text-align: center; font-size: 42px; font-weight: 900; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
-  .subtitle { text-align: center; color: #71717a; margin-bottom: 32px; }
-  .form-group { margin-bottom: 20px; }
-    label { display: block; font-weight: 600; color: #9ca3af; margin-bottom: 8px; font-size: 14px; }
-    input, textarea { width: 100%; padding: 14px; background: #0a0a15; border: 2px solid #252538; border-radius: 10px; color: #e4e4e7; font-size: 15px; font-family: inherit; }
-    input:focus, textarea:focus { outline: none; border-color: #dc2626; }
-  .btn-login { width: 100%; padding: 14px; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; }
-  .error { background: #7f1d1d; color: #fecaca; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; display: none; }
-  .navbar { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
-  .brand { font-size: 26px; font-weight: 900; }
-  .badge { background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; }
-  .navbar-left { display: flex; align-items: center; gap: 16px; }
-  .navbar-right { display: flex; gap: 12px; }
-  .btn { padding: 9px 20px; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; cursor: pointer; font-weight: 700; text-decoration: none; font-size: 14px; }
-  .btn-copy { background: linear-gradient(135deg, #16a34a, #15803d)!important; border-color: rgba(255,255,255,0.4)!important; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-  .page-title { font-size: 32px; font-weight: 800; margin-bottom: 16px; color: #fff; }
-  .page-desc { color: #71717a; margin-bottom: 32px; font-size: 15px; }
-  .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
-  .admin-card { background: #13131f; border: 1px solid #252538; border-radius: 16px; padding: 24px; }
-  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #252538; }
-  .card-icon { width: 44px; height: 44px; background: linear-gradient(135deg, #dc2626, #991b1b); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-  .card-title { font-size: 18px; font-weight: 700; color: #fff; }
-  .btn-save { width: 100%; padding: 12px; background: linear-gradient(135deg, #dc2626, #991b1b); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 8px; }
-  .item-list { margin-top: 16px; max-height: 200px; overflow-y: auto; }
-  .item { background: #0a0a15; padding: 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-  .btn-delete { padding: 6px 12px; background: #7f1d1d; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
-  .success { background: #14532d; color: #86efac; padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; display: none; }
-  .code-box { background: #0a0a15; border: 2px solid #252538; border-radius: 10px; padding: 16px; margin-top: 16px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px; white-space: pre-wrap; word-break: break-all; display: none; }
-  .btn-copy-code { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 8px; }
-    @media (max-width: 768px) {.admin-grid { grid-template-columns: 1fr; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M2JET - Admin Panel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#0a0a15;color:#e4e4e7;min-height:100vh}
+.hidden{display:none!important}
+.login-container{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-box{background:#13131f;border:2px solid #dc2626;border-radius:20px;padding:40px;max-width:420px;width:100%}
+.logo{text-align:center;font-size:42px;font-weight:900;color:#dc2626;margin-bottom:8px}
+.subtitle{text-align:center;color:#71717a;margin-bottom:32px}
+.form-group{margin-bottom:20px}
+label{display:block;font-weight:600;color:#9ca3af;margin-bottom:8px;font-size:14px}
+input,textarea{width:100%;padding:14px;background:#0a0a15;border:2px solid #252538;border-radius:10px;color:#e4e4e7;font-size:15px}
+input:focus,textarea:focus{outline:none;border-color:#dc2626}
+.btn-login{width:100%;padding:14px;background:#dc2626;color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:16px}
+.error{background:#7f1d1d;color:#fecaca;padding:12px;border-radius:8px;margin-bottom:16px;font-size:14px;display:none}
+.navbar{background:#dc2626;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:26px;font-weight:900}
+.badge{background:rgba(255,255,255,0.2);padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700}
+.navbar-left{display:flex;align-items:center;gap:16px}
+.navbar-right{display:flex;gap:12px}
+.btn{padding:9px 20px;background:rgba(255,255,255,0.2);color:white;border:2px solid rgba(255,255,255,0.3);border-radius:8px;cursor:pointer;font-weight:700;font-size:14px}
+.container{max-width:1200px;margin:0 auto;padding:32px 24px}
+.page-title{font-size:32px;font-weight:800;margin-bottom:16px;color:#fff}
+.page-desc{color:#71717a;margin-bottom:32px;font-size:15px}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:24px}
+.admin-card{background:#13131f;border:1px solid #252538;border-radius:16px;padding:24px}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid #252538}
+.card-icon{width:44px;height:44px;background:#dc2626;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.card-title{font-size:18px;font-weight:700;color:#fff}
+.btn-save{width:100%;padding:12px;background:#dc2626;color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:8px}
+.item-list{margin-top:16px;max-height:200px;overflow-y:auto}
+.item{background:#0a0a15;padding:12px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.btn-delete{padding:6px 12px;background:#7f1d1d;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}
+.success{background:#14532d;color:#86efac;padding:10px;border-radius:8px;margin-bottom:12px;font-size:13px;display:none}
+.code-box{background:#0a0a15;border:2px solid #252538;border-radius:10px;padding:16px;margin-top:16px;max-height:300px;overflow-y:auto;font-family:monospace;font-size:12px;white-space:pre-wrap;word-break:break-all;display:none}
+.btn-copy-code{width:100%;padding:12px;background:#2563eb;color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:8px}
+@media(max-width:768px){.admin-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <div id="loginScreen" class="login-container">
-    <div class="login-box">
-      <div class="logo">M2JET</div>
-      <div class="subtitle">Admin Panel Girişi</div>
-      <div id="errorMsg" class="error"></div>
-      <form onsubmit="girisYap(event)">
-        <div class="form-group">
-          <label>E-posta</label>
-          <input type="email" id="email" placeholder="admin@m2jet.com" required>
-        </div>
-        <div class="form-group">
-          <label>Şifre</label>
-          <input type="password" id="password" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="btn-login">Giriş Yap</button>
-      </form>
-    </div>
-  </div>
+<div id="loginScreen" class="login-container">
+<div class="login-box">
+<div class="logo">M2JET</div>
+<div class="subtitle">Admin Panel Girişi</div>
+<div id="errorMsg" class="error"></div>
+<form id="loginForm">
+<div class="form-group">
+<label>E-posta</label>
+<input type="email" id="email" value="admin@m2jet.com" required>
+</div>
+<div class="form-group">
+<label>Şifre</label>
+<input type="password" id="password" placeholder="••••••••" required>
+</div>
+<button type="submit" class="btn-login">Giriş Yap</button>
+</form>
+</div>
+</div>
+<div id="adminPanel" class="hidden">
+<nav class="navbar">
+<div class="navbar-left">
+<div class="brand">M2JET</div>
+<div class="badge">ADMIN</div>
+</div>
+<div class="navbar-right">
+<button onclick="koduGoster()" class="btn">📋 KODU KOPYALA</button>
+<button onclick="cikisYap()" class="btn">Çıkış</button>
+</div>
+</nav>
+<div class="container">
+<h1 class="page-title">⚙️ Admin Panel</h1>
+<p class="page-desc">Düzenle → Kaydet → "KODU KOPYALA" → dashboard.html dosyasına yapıştır</p>
+<div class="admin-grid">
+<div class="admin-card">
+<div class="card-header">
+<div class="card-icon">📱</div>
+<div class="card-title">Sosyal Medya Linkleri</div>
+</div>
+<div id="socialSuccess" class="success"></div>
+<div class="form-group"><label>Facebook</label><input type="url" id="facebook" placeholder="https://facebook.com/m2jet"></div>
+<div class="form-group"><label>Instagram</label><input type="url" id="instagram" placeholder="https://instagram.com/m2jet"></div>
+<div class="form-group"><label>TikTok</label><input type="url" id="tiktok" placeholder="https://tiktok.com/@m2jet"></div>
+<div class="form-group"><label>YouTube</label><input type="url" id="youtube" placeholder="https://youtube.com/@m2jet"></div>
+<div class="form-group"><label>Discord</label><input type="url" id="discord" placeholder="https://discord.gg/m2jet"></div>
+<button class="btn-save" onclick="kaydetSosyal()">💾 Kaydet</button>
+</div>
+<div class="admin-card">
+<div class="card-header">
+<div class="card-icon">📢</div>
+<div class="card-title">Duyuru Yönetimi</div>
+</div>
+<div id="duyuruSuccess" class="success"></div>
+<div class="form-group"><label>Duyuru Başlığı</label><input type="text" id="duyuruBaslik" placeholder="Yeni Event!"></div>
+<div class="form-group"><label>Duyuru İçeriği</label><textarea id="duyuruIcerik" style="min-height:80px" placeholder="Etkinlik detayları..."></textarea></div>
+<button class="btn-save" onclick="ekleDuyuru()">➕ Duyuru Ekle</button>
+<div class="item-list" id="duyuruListesi"></div>
+</div>
+</div>
+<div id="codeBox" class="code-box"></div>
+<button id="copyBtn" class="btn-copy-code hidden" onclick="kopyala()">📋 Kodu Panoya Kopyala</button>
+</div>
+</div>
+<script>
+const ADMIN_EMAIL='admin@m2jet.com';
+const ADMIN_SIFRE='M2jet2024!';
 
-  <div id="adminPanel" class="hidden">
-    <nav class="navbar">
-      <div class="navbar-left">
-        <div class="brand">M2JET</div>
-        <div class="badge">ADMIN</div>
-      </div>
-      <div class="navbar-right">
-        <button onclick="koduGoster()" class="btn btn-copy">📋 KODU KOPYALA</button>
-        <button onclick="cikisYap()" class="btn">Çıkış</button>
-      </div>
-    </nav>
-    <div class="container">
-      <h1 class="page-title">⚙️ Admin Panel</h1>
-      <p class="page-desc">Düzenle → Kaydet → "KODU KOPYALA" → dashboard.html dosyasına yapıştır → GitHub'a yükle</p>
-      <div class="admin-grid">
-        <div class="admin-card">
-          <div class="card-header">
-            <div class="card-icon">📱</div>
-            <div class="card-title">Sosyal Medya Linkleri</div>
-          </div>
-          <div id="socialSuccess" class="success"></div>
-          <div class="form-group"><label>Facebook</label><input type="url" id="facebook" placeholder="https://facebook.com/m2jet"></div>
-          <div class="form-group"><label>Instagram</label><input type="url" id="instagram" placeholder="https://instagram.com/m2jet"></div>
-          <div class="form-group"><label>TikTok</label><input type="url" id="tiktok" placeholder="https://tiktok.com/@m2jet"></div>
-          <div class="form-group"><label>YouTube</label><input type="url" id="youtube" placeholder="https://youtube.com/@m2jet"></div>
-          <div class="form-group"><label>Discord</label><input type="url" id="discord" placeholder="https://discord.gg/m2jet"></div>
-          <button class="btn-save" onclick="kaydetSosyal()">💾 Kaydet</button>
-        </div>
-        <div class="admin-card">
-          <div class="card-header">
-            <div class="card-icon">📢</div>
-            <div class="card-title">Duyuru Yönetimi</div>
-          </div>
-          <div id="duyuruSuccess" class="success"></div>
-          <div class="form-group"><label>Duyuru Başlığı</label><input type="text" id="duyuruBaslik" placeholder="Yeni Event!"></div>
-          <div class="form-group"><label>Duyuru İçeriği</label><textarea id="duyuruIcerik" style="min-height: 80px;" placeholder="Etkinlik detayları..."></textarea></div>
-          <button class="btn-save" onclick="ekleDuyuru()">➕ Duyuru Ekle</button>
-          <div class="item-list" id="duyuruListesi"></div>
-        </div>
-      <div id="codeBox" class="code-box"></div>
-      <button id="copyBtn" class="btn-copy-code hidden" onclick="kopyala()">📋 Kodu Pan
+document.getElementById('loginForm').addEventListener('submit',function(e){
+e.preventDefault();
+var email=document.getElementById('email').value;
+var sifre=document.getElementById('password').value;
+if(email===ADMIN_EMAIL&&sifre===ADMIN_SIFRE){
+localStorage.setItem('admin_giris','true');
+document.getElementById('loginScreen').classList.add('hidden');
+document.getElementById('adminPanel').classList.remove('hidden');
+yukleVeriler();
+}else{
+var err=document.getElementById('errorMsg');
+err.textContent='E-posta veya şifre hatalı!';
+err.style.display='block';
+setTimeout(function(){err.style.display='none'},3000);
+}
+});
+
+if(localStorage.getItem('admin_giris')==='true'){
+document.getElementById('loginScreen').classList.add('hidden');
+document.getElementById('adminPanel').classList.remove('hidden');
+yukleVeriler();
+}
+
+function cikisYap(){
+localStorage.removeItem('admin_giris');
+location.reload();
+}
+
+function kaydetSosyal(){
+var sosyal={
+facebook:document.getElementById('facebook').value,
+instagram:document.getElementById('instagram').value,
+tiktok:document.getElementById('tiktok').value,
+youtube:document.getElementById('youtube').value,
+discord:document.getElementById('discord').value
+};
+localStorage.setItem('m2jet_social',JSON.stringify(sosyal));
+goster('socialSuccess','✅ Kaydedildi! KODU KOPYALA butonuna bas');
+}
+
+function yukleVeriler(){
+var s=JSON.parse(localStorage.getItem('m2jet_social')||'{}');
+document.getElementById('facebook').value=s.facebook||'';
+document.getElementById('instagram').value=s.instagram||'';
+document.getElementById('tiktok').value=s.tiktok||'';
+document.getElementById('youtube').value=s.youtube||'';
+document.getElementById('discord').value=s.discord||'';
+listeleDuyurular();
+}
+
+function ekleDuyuru(){
+var b=document.getElementById('duyuruBaslik').value;
+var i=document.getElementById('duyuruIcerik').value;
+if(!b||!i){alert('Başlık ve içerik boş olamaz!');return}
+var d=JSON.parse(localStorage.getItem('m2jet_duyurular')||'[]');
+d.unshift({id:Date.now(),baslik:b,icerik:i,tarih:new Date().toLocaleDateString('tr-TR')});
+localStorage.setItem('m2jet_duyurular',JSON.stringify(d));
+document.getElementById('duyuruBaslik').value='';
+document.getElementById('duyuruIcerik').value='';
+goster('duyuruSuccess','✅ Eklendi! KODU KOPYALA butonuna bas');
+listeleDuyurular();
+}
+
+function listeleDuyurular(){
+var d=JSON.parse(localStorage.getItem('m2jet_duyurular')||'[]');
+document.getElementById('duyuruListesi').innerHTML=d.map(function(x){
+return '<div class="item"><span>'+x.baslik+'</span><button class="btn-delete" onclick="silDuyuru('+x.id+')">Sil</button></div>';
+}).join('');
+}
+
+function silDuyuru(id){
+var d=JSON.parse(localStorage.getItem('m2jet_duyurular')||'[]');
+d=d.filter(function(x){return x.id!==id});
+localStorage.setItem('m2jet_duyurular',JSON.stringify(d));
+listeleDuyurular();
+}
+
+function goster(id,msg){
+var el=document.getElementById(id);
+el.textContent=msg;
+el.style.display='block';
+setTimeout(function(){el.style.display='none'},3000);
+}
+
+function koduGoster(){
+var s=JSON.parse(localStorage.getItem('m2jet_social')||'{}');
+var d=JSON.parse(localStorage.getItem('m2jet_duyurular')||'[]');
+var html='<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>M2JET</title><style>body{font-family:Arial;background:#0a0a15;color:#fff;padding:20px}.card{background:#13131f;padding:20px;border-radius:12px;margin:16px 0}a{color:#dc2626;text-decoration:none;margin-right:12px}</style></head><body><h1>M2JET</h1><div class="card"><h2>Sosyal Medya</h2>';
+if(s.facebook)html+='<a href="'+s.facebook+'" target="_blank">Facebook</a>';
+if(s.instagram)html+='<a href="'+s.instagram+'" target="_blank">Instagram</a>';
+if(s.tiktok)html+='<a href="'+s.tiktok+'" target="_blank">TikTok</a>';
+if(s.youtube)html+='<a href="'+s.youtube+'" target="_blank">YouTube</a>';
+if(s.discord)html+='<a href="'+s.discord+'" target="_blank">Discord</a>';
+html+='</div><div class="card"><h2>Duyurular</h2>';
+d.forEach(function(x){html+='<div style="margin:12px 0;padding:12px;background:#0a0a15;border-radius:8px"><b>'+x.baslik+'</b><p>'+x.icerik+'</p><small>'+x.tarih+'</small></div>'});
+html+='</div></body></html>';
+document.getElementById('codeBox').textContent=html;
+document.getElementById('codeBox').style.display='block';
+document.getElementById('copyBtn').classList.remove('hidden');
+window.scrollTo(0,document.body.scrollHeight);
+}
+
+function kopyala(){
+var kod=document.getElementById('codeBox').textContent;
+navigator.clipboard.writeText(kod).then(function(){
+alert('✅ Kod kopyalandı! GitHub\'da dashboard.html dosyasına yapıştır');
+});
+}
+</script>
+</body>
+</html>
