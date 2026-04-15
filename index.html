@@ -1,14 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=dashboard.html">
-  <title>Yönlendiriliyor...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M2JET - Giriş</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-box {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .logo {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102,126,234,0.4);
+    }
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    .success {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    .info {
+      text-align: center;
+      margin-top: 20px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+  </style>
 </head>
-<body style="background:#0f0f1e;color:white;font-family:Arial;display:flex;align-items:center;justify-content:center;height:100vh;">
-  <h1>Yükleniyor...</h1>
+<body>
+  <div class="login-box">
+    <div class="logo">M2JET</div>
+    <div class="subtitle">Hesabına giriş yap</div>
+    
+    <div id="errorMsg" class="error"></div>
+    <div id="successMsg" class="success"></div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label>E-posta</label>
+        <input type="email" id="email" placeholder="test@test.com" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Şifre</label>
+        <input type="password" id="password" placeholder="••••••" required>
+      </div>
+      
+      <button type="submit" class="btn">Giriş Yap</button>
+    </form>
+    
+    <div class="info">
+      Test: test@test.com / 123456
+    </div>
+  </div>
+
   <script>
-    window.location.href = "dashboard.html";
+    // ZATEN GİRİŞ YAPTIYSA DASHBOARD'A AT
+    if (localStorage.getItem('m2jet_logged_in') === 'true') {
+      window.location.href = 'dashboard.html';
+    }
+
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      errorMsg.style.display = 'none';
+      successMsg.style.display = 'none';
+      
+      // TEST HESABI KONTROL
+      if (email === 'test@test.com' && password === '123456') {
+        successMsg.textContent = '✅ E-posta doğrulandı! Giriş yapılıyor...';
+        successMsg.style.display = 'block';
+        
+        // OTURUM AÇ
+        localStorage.setItem('m2jet_logged_in', 'true');
+        localStorage.setItem('m2jet_email', email);
+        
+        // 1 SANİYE SONRA DASHBOARD'A GİT
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1000);
+      } else {
+        errorMsg.textContent = '❌ E-posta veya şifre hatalı!';
+        errorMsg.style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>
