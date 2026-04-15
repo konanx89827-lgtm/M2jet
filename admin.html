@@ -52,6 +52,10 @@
     .btn:hover {
       background: rgba(255,255,255,0.3);
     }
+    .btn-download {
+      background: linear-gradient(135deg, #16a34a, #15803d) !important;
+      border-color: rgba(255,255,255,0.4) !important;
+    }
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -60,8 +64,13 @@
     .page-title {
       font-size: 32px;
       font-weight: 800;
-      margin-bottom: 32px;
+      margin-bottom: 16px;
       color: #fff;
+    }
+    .page-desc {
+      color: #71717a;
+      margin-bottom: 32px;
+      font-size: 15px;
     }
     .admin-grid {
       display: grid;
@@ -193,6 +202,7 @@
       <div class="badge">ADMIN</div>
     </div>
     <div class="navbar-right">
+      <button onclick="siteyiIndir()" class="btn btn-download">⬇️ SİTEYİ İNDİR</button>
       <a href="dashboard.html" class="btn">Dashboard</a>
       <button onclick="cikisYap()" class="btn">Çıkış</button>
     </div>
@@ -200,6 +210,7 @@
 
   <div class="container">
     <h1 class="page-title">⚙️ Admin Panel</h1>
+    <p class="page-desc">Değişiklikleri yap → Sağ üstten "SİTEYİ İNDİR" → Yeni HTML dosyası inecek → GitHub'a yükle</p>
 
     <div class="admin-grid">
       <div class="admin-card">
@@ -248,24 +259,6 @@
         <button class="btn-save" onclick="ekleDuyuru()">➕ Duyuru Ekle</button>
         <div class="item-list" id="duyuruListesi"></div>
       </div>
-
-      <div class="admin-card">
-        <div class="card-header">
-          <div class="card-icon">👥</div>
-          <div class="card-title">Hesap Yönetimi</div>
-        </div>
-        <div id="hesapSuccess" class="success"></div>
-        <div class="form-group">
-          <label>Yeni Admin E-posta</label>
-          <input type="email" id="yeniAdmin" placeholder="admin@m2jet.com">
-        </div>
-        <div class="form-group">
-          <label>Şifre</label>
-          <input type="password" id="yeniSifre" placeholder="••••••••">
-        </div>
-        <button class="btn-save" onclick="ekleAdmin()">➕ Admin Ekle</button>
-        <div class="item-list" id="adminListesi"></div>
-      </div>
     </div>
   </div>
 
@@ -285,7 +278,7 @@
       };
       localStorage.setItem('m2jet_social', JSON.stringify(sosyal));
       const msg = document.getElementById('socialSuccess');
-      msg.textContent = '✅ Sosyal medya linkleri kaydedildi!';
+      msg.textContent = '✅ Kaydedildi! İndirme butonuna bas';
       msg.style.display = 'block';
       setTimeout(() => msg.style.display = 'none', 3000);
     }
@@ -317,7 +310,7 @@
       document.getElementById('duyuruBaslik').value = '';
       document.getElementById('duyuruIcerik').value = '';
       const msg = document.getElementById('duyuruSuccess');
-      msg.textContent = '✅ Duyuru eklendi!';
+      msg.textContent = '✅ Eklendi! İndirme butonuna bas';
       msg.style.display = 'block';
       setTimeout(() => msg.style.display = 'none', 3000);
       listeleDuyurular();
@@ -341,46 +334,4 @@
       listeleDuyurular();
     }
 
-    function ekleAdmin() {
-      const email = document.getElementById('yeniAdmin').value;
-      const sifre = document.getElementById('yeniSifre').value;
-      if (!email || !sifre) {
-        alert('Email ve şifre boş olamaz!');
-        return;
-      }
-      let adminler = JSON.parse(localStorage.getItem('m2jet_adminler') || '[]');
-      adminler.push({ email, sifre, id: Date.now() });
-      localStorage.setItem('m2jet_adminler', JSON.stringify(adminler));
-      document.getElementById('yeniAdmin').value = '';
-      document.getElementById('yeniSifre').value = '';
-      const msg = document.getElementById('hesapSuccess');
-      msg.textContent = '✅ Admin eklendi!';
-      msg.style.display = 'block';
-      setTimeout(() => msg.style.display = 'none', 3000);
-      listeleAdminler();
-    }
-
-    function listeleAdminler() {
-      const adminler = JSON.parse(localStorage.getItem('m2jet_adminler') || '[]');
-      const liste = document.getElementById('adminListesi');
-      liste.innerHTML = adminler.map(a => `
-        <div class="item">
-          <span>${a.email}</span>
-          <button class="btn-delete" onclick="silAdmin(${a.id})">Sil</button>
-        </div>
-      `).join('');
-    }
-
-    function silAdmin(id) {
-      let adminler = JSON.parse(localStorage.getItem('m2jet_adminler') || '[]');
-      adminler = adminler.filter(a => a.id !== id);
-      localStorage.setItem('m2jet_adminler', JSON.stringify(adminler));
-      listeleAdminler();
-    }
-
-    yukleSosyal();
-    listeleDuyurular();
-    listeleAdminler();
-  </script>
-</body>
-</html>
+    // SİTEYİ İNDİR - TÜM DEĞİŞ
