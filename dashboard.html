@@ -10,39 +10,22 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Rajdhani', sans-serif;
-      background: #0a0a0f;
+      background: #0f0f1e;
       min-height: 100vh;
       color: #fff;
-      position: relative;
-      overflow-x: hidden;
-    }
-    
-    /* ARKA PLAN - KALE + SAVAŞÇI */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        linear-gradient(135deg, rgba(10,10,15,0.92) 0%, rgba(15,15,30,0.88) 100%),
-        url('https://storage.googleapis.com/maker-me/uploads/1089129347614883') center/cover;
-      z-index: -1;
-      filter: brightness(0.5) contrast(1.3);
     }
     
    .navbar {
-      background: linear-gradient(180deg, rgba(20,20,35,0.98) 0%, rgba(15,15,25,0.95) 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: 16px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.8), 0 0 60px rgba(102,126,234,0.3);
+      box-shadow: 0 4px 20px rgba(102,126,234,0.4);
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 2px solid #667eea;
+      border-bottom: 3px solid #ffd700;
     }
    .navbar-left {
       display: flex;
@@ -52,8 +35,8 @@
    .menu-btn {
       width: 40px;
       height: 40px;
-      background: rgba(102,126,234,0.2);
-      border: 2px solid #667eea;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
       border-radius: 8px;
       display: flex;
       flex-direction: column;
@@ -64,13 +47,12 @@
       transition: all 0.2s;
     }
    .menu-btn:hover {
-      background: rgba(102,126,234,0.4);
-      box-shadow: 0 0 15px rgba(102,126,234,0.6);
+      background: rgba(255,255,255,0.3);
     }
    .menu-btn span {
       width: 20px;
       height: 2px;
-      background: #fff;
+      background: white;
       border-radius: 2px;
       transition: all 0.3s;
     }
@@ -88,24 +70,28 @@
    .logo-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
    .logo-icon {
-      width: 45px;
-      height: 45px;
-      background: url('https://storage.googleapis.com/maker-me/uploads/1089129064281578') center/contain no-repeat;
-      filter: drop-shadow(0 0 10px rgba(255,215,0,0.6));
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
     }
    .logo {
       font-family: 'Cinzel', serif;
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 900;
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 25%, #ffa500 50%, #ff8c00 75%, #ffd700 100%);
+      background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-shadow: 0 0 30px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,0.8);
-      letter-spacing: 3px;
+      letter-spacing: 2px;
     }
     
    .user-info {
@@ -117,52 +103,49 @@
     }
     button {
       padding: 10px 18px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: rgba(255,255,255,0.2);
       color: white;
-      border: 2px solid #667eea;
+      border: 2px solid rgba(255,255,255,0.3);
       border-radius: 8px;
       cursor: pointer;
       font-weight: 700;
       font-family: 'Rajdhani', sans-serif;
       transition: all 0.2s;
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
     button:hover { 
-      box-shadow: 0 0 20px rgba(102,126,234,0.8);
-      transform: translateY(-2px);
+      background: rgba(255,255,255,0.3);
     }
 
     /* SOL SIDEBAR MENÜ */
    .sidebar {
       position: fixed;
       left: -280px;
-      top: 74px;
+      top: 72px;
       width: 280px;
-      height: calc(100vh - 74px);
-      background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1e 100%);
+      height: calc(100vh - 72px);
+      background: #1a1a2e;
       border-right: 2px solid #667eea;
       transition: left 0.3s ease;
       z-index: 98;
       overflow-y: auto;
       padding: 20px;
-      box-shadow: 4px 0 30px rgba(0,0,0,0.8);
     }
    .sidebar.open {
       left: 0;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.8);
     }
    .sidebar-overlay {
       position: fixed;
-      top: 74px;
+      top: 72px;
       left: 0;
       width: 100%;
-      height: calc(100vh - 74px);
-      background: rgba(0,0,0,0.8);
+      height: calc(100vh - 72px);
+      background: rgba(0,0,0,0.7);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s;
       z-index: 97;
-      backdrop-filter: blur(5px);
     }
    .sidebar-overlay.show {
       opacity: 1;
@@ -179,7 +162,6 @@
       letter-spacing: 2px;
       margin-bottom: 12px;
       padding: 0 12px;
-      text-shadow: 0 0 10px rgba(255,215,0,0.5);
     }
    .menu-item {
       display: flex;
@@ -195,10 +177,9 @@
       border: 1px solid transparent;
     }
    .menu-item:hover {
-      background: rgba(102,126,234,0.2);
+      background: #252542;
       color: #fff;
       border-color: #667eea;
-      box-shadow: 0 0 15px rgba(102,126,234,0.3);
     }
    .menu-item-icon {
       font-size: 22px;
@@ -222,33 +203,16 @@
       margin-bottom: 30px;
     }
    .card {
-      background: linear-gradient(135deg, rgba(26,26,46,0.95) 0%, rgba(15,15,30,0.95) 100%);
+      background: #1a1a2e;
       border: 2px solid #2d2d44;
       border-radius: 16px;
       padding: 28px;
       transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-   .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, #667eea, #ffd700, #667eea);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-   .card:hover::before {
-      opacity: 1;
     }
    .card:hover {
       border-color: #667eea;
-      transform: translateY(-6px);
-      box-shadow: 0 12px 40px rgba(102,126,234,0.4), 0 0 60px rgba(102,126,234,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(102,126,234,0.3);
     }
    .card-header {
       display: flex;
@@ -265,14 +229,12 @@
       align-items: center;
       justify-content: center;
       font-size: 28px;
-      box-shadow: 0 4px 15px rgba(102,126,234,0.4);
     }
    .card h3 {
       font-size: 20px;
       color: #fff;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
     }
    .card-value {
       font-size: 38px;
@@ -282,7 +244,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin: 14px 0;
-      text-shadow: 0 0 20px rgba(255,215,0,0.3);
     }
    .card-desc {
       color: #999;
@@ -290,384 +251,4 @@
       font-weight: 600;
     }
    .card-button {
-      width: 100%;
-      margin-top: 18px;
-      padding: 14px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: 2px solid #667eea;
-      border-radius: 10px;
-      color: white;
-      font-weight: 700;
-      font-family: 'Rajdhani', sans-serif;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-   .card-button:hover {
-      box-shadow: 0 0 25px rgba(102,126,234,0.8);
-      transform: scale(1.02);
-    }
-   .duyuru {
-      background: linear-gradient(135deg, rgba(26,26,46,0.95) 0%, rgba(15,15,30,0.95) 100%);
-      border: 2px solid #2d2d44;
-      border-left: 5px solid #ffd700;
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-    }
-   .duyuru h3 {
-      color: #ffd700;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 22px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 15px rgba(255,215,0,0.5);
-    }
-   .duyuru-item {
-      padding: 16px;
-      background: rgba(15,15,30,0.8);
-      border-radius: 10px;
-      margin-bottom: 12px;
-      border-left: 4px solid #667eea;
-      transition: all 0.2s;
-    }
-   .duyuru-item:hover {
-      background: rgba(25,25,40,0.9);
-      border-left-color: #ffd700;
-    }
-   .duyuru-item:last-child { margin-bottom: 0; }
-   .duyuru-title {
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 6px;
-      font-size: 17px;
-    }
-   .duyuru-text {
-      color: #bbb;
-      font-size: 15px;
-      line-height: 1.6;
-    }
-   .duyuru-date {
-      color: #666;
-      font-size: 13px;
-      margin-top: 8px;
-      font-weight: 600;
-    }
-   .reklam-alan {
-      background: linear-gradient(135deg, rgba(26,26,46,0.95) 0%, rgba(37,37,66,0.95) 100%);
-      border: 3px dashed #667eea;
-      border-radius: 20px;
-      padding: 50px;
-      text-align: center;
-      margin-bottom: 24px;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-   .reklam-alan::before {
-      content: '💎';
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 60px;
-      opacity: 0.1;
-    }
-   .reklam-alan h3 {
-      color: #ffd700;
-      margin-bottom: 14px;
-      font-size: 24px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-   .reklam-alan p {
-      color: #aaa;
-      margin-bottom: 24px;
-      font-size: 16px;
-    }
-   .badge {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-   .badge.admin {
-      background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
-      color: #000;
-      box-shadow: 0 0 15px rgba(255,215,0,0.5);
-    }
-   .badge.user {
-      background: #2d2d44;
-      color: #667eea;
-      border: 1px solid #667eea;
-    }
-   .loading {
-      text-align: center;
-      padding: 60px;
-      color: #999;
-      font-size: 18px;
-      font-weight: 600;
-    }
-   .admin-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #d63031 0%, #e17055 100%);
-      color: white;
-      border: 3px solid #d63031;
-      border-radius: 14px;
-      font-size: 18px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-top: 24px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      box-shadow: 0 6px 20px rgba(214,48,49,0.4);
-    }
-   .admin-btn:hover {
-      box-shadow: 0 8px 30px rgba(214,48,49,0.8);
-    }
-    @media (max-width: 768px) {
-     .grid { grid-template-columns: 1fr; }
-     .logo { font-size: 24px; }
-     .logo-icon { width: 35px; height: 35px; }
-    }
-  </style>
-</head>
-<body>
-  <!-- SOL SIDEBAR MENÜ -->
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
-  <div class="sidebar" id="sidebar">
-    
-    <div class="menu-section">
-      <div class="menu-title">Topluluk</div>
-      <a href="#" class="menu-item" onclick="alert('Forum adresi daha sonra eklenecek'); return false;">
-        <span class="menu-item-icon">💬</span>
-        <span class="menu-item-text">Forum</span>
-      </a>
-      <a href="#" class="menu-item" onclick="alert('Discord linki daha sonra eklenecek'); return false;">
-        <span class="menu-item-icon">🎮</span>
-        <span class="menu-item-text">Discord</span>
-      </a>
-    </div>
-
-    <div class="menu-section">
-      <div class="menu-title">Sosyal Medya</div>
-      <a href="#" class="menu-item" onclick="alert('Facebook linki daha sonra eklenecek'); return false;">
-        <span class="menu-item-icon">📘</span>
-        <span class="menu-item-text">Facebook</span>
-      </a>
-      <a href="#" class="menu-item" onclick="alert('Instagram linki daha sonra eklenecek'); return false;">
-        <span class="menu-item-icon">📷</span>
-        <span class="menu-item-text">Instagram</span>
-      </a>
-      <a href="#" class="menu-item" onclick="alert('TikTok linki daha sonra eklenecek'); return false;">
-        <span class="menu-item-icon">🎵</span>
-        <span class="menu-item-text">TikTok</span>
-      </a>
-      <a href="#" class="menu-item" onclick="alert('YouTube linki daha sonra eklenecek'); return false;">
-        <span class="menu-item-icon">▶️</span>
-        <span class="menu-item-text">YouTube</span>
-      </a>
-    </div>
-
-    <div class="menu-section">
-      <div class="menu-title">Destek</div>
-      <a href="#" class="menu-item" onclick="alert('Destek sistemi yakında!'); return false;">
-        <span class="menu-item-icon">💡</span>
-        <span class="menu-item-text">Yardım</span>
-      </a>
-      <a href="#" class="menu-item" onclick="alert('İletişim: admin@m2jet.com'); return false;">
-        <span class="menu-item-icon">✉️</span>
-        <span class="menu-item-text">İletişim</span>
-      </a>
-    </div>
-
-  <div class="navbar">
-    <div class="navbar-left">
-      <div class="menu-btn" id="menuBtn" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <div class="logo-wrapper">
-        <div class="logo-icon"></div>
-        <div class="logo">M2JET</div>
-      </div>
-    </div>
-    <div class="user-info">
-      <span id="userEmail">Yükleniyor...</span>
-      <button onclick="logout()">Çıkış</button>
-    </div>
-  </div>
-
-  <div class="container">
-    <div id="loading" class="loading">Yükleniyor...</div>
-
-    <div id="content" style="display:none;">
-      
-      <!-- DUYURU PANOSU -->
-      <div class="duyuru">
-        <h3>📢 DUYURULAR</h3>
-        <div id="duyuruListesi">
-          <div class="duyuru-item">
-            <div class="duyuru-title">⚔️ Hoşgeldiniz Savaşçılar!</div>
-            <div class="duyuru-text">M2JET'e hoşgeldin. Won ve EP kuponlarını buradan güvenle alabilirsin. 7/24 destek!</div>
-            <div class="duyuru-date">15.04.2026</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- KARTLAR GRID -->
-      <div class="grid">
-        
-        <!-- METIN2 -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">⚔️</div>
-            <h3>Metin2</h3>
-          </div>
-          <div class="card-value">Aktif</div>
-          <div class="card-desc">Metin2 hesabın bağlı</div>
-          <button class="card-button" onclick="alert('Yakında!')">Hesaba Git</button>
-        </div>
-
-        <!-- ITEM -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">🎒</div>
-            <h3>Item</h3>
-          </div>
-          <div class="card-value">0</div>
-          <div class="card-desc">Satın aldığın itemler</div>
-          <button class="card-button" onclick="alert('Yakında!')">Itemleri Gör</button>
-        </div>
-
-        <!-- HESAB -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">👤</div>
-            <h3>Hesab</h3>
-          </div>
-          <div class="card-value" id="userRole">USER</div>
-          <div class="card-desc" id="userEmailCard">-</div>
-          <button class="card-button" onclick="alert('Yakında!')">Profili Düzenle</button>
-        </div>
-
-        <!-- WON OYUN PARASI -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">💰</div>
-            <h3>Won Bakiye</h3>
-          </div>
-          <div class="card-value">0 Won</div>
-          <div class="card-desc">Oyun parası bakiyen</div>
-          <button class="card-button" onclick="alert('Yakında!')">Won Satın Al</button>
-        </div>
-
-        <!-- EP KUPONU -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">🎫</div>
-            <h3>EP Kuponu</h3>
-          </div>
-          <div class="card-value">0 EP</div>
-          <div class="card-desc">EP kuponu bakiyen</div>
-          <button class="card-button" onclick="alert('Yakında!')">EP Kuponu Al</button>
-        </div>
-
-      <!-- REKLAM ALANI -->
-      <div class="reklam-alan">
-        <h3>📢 REKLAM VER</h3>
-        <p>Buraya reklamınızı koyabilirsiniz. 728x90 / 300x250 boyutlarında reklam alanı.</p>
-        <button class="card-button" style="max-width:300px;margin:0 auto;" onclick="alert('Reklam vermek için admin ile iletişime geç: admin@m2jet.com')">Reklam Ver</button>
-      </div>
-
-      <!-- ADMIN BUTONU -->
-      <div id="adminCard" style="display:none;">
-        <button class="admin-btn" onclick="goToAdmin()">⚙️ ADMİN PANELE GİT</button>
-      </div>
-
-    </div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCht0CC3M-_9RG4NvLcg2HsXE60dpYVOag",
-      authDomain: "m2jet-bd5bf.firebaseapp.com",
-      projectId: "m2jet-bd5bf",
-      storageBucket: "m2jet-bd5bf.firebasestorage.app",
-      messagingSenderId: "332419987926",
-      appId: "1:332419987926:web:16272837a59e881374cc77",
-      measurementId: "G-SBHJ3FT46W"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = 'index.html';
-        return;
-      }
-
-      document.getElementById('userEmail').textContent = user.email;
-      document.getElementById('userEmailCard').textContent = user.email;
-
-      try {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          const role = data.role || 'user';
-
-          document.getElementById('userRole').textContent = role.toUpperCase();
-
-          if (role === 'admin') {
-            document.getElementById('adminCard').style.display = 'block';
-          }
-        }
-
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
-
-      } catch (error) {
-        console.error(error);
-        alert('Hata: ' + error.message);
-      }
-    });
-
-    window.logout = async function() {
-      await signOut(auth);
-      window.location.href = 'index.html';
-    }
-
-    window.goToAdmin = function() {
-      window.location.href = 'admin.html';
-    }
-
-    window.toggleMenu = function() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('sidebarOverlay');
-      const menuBtn = document.getElementById('menuBtn');
-      
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('show');
-      menuBtn.classList.toggle('active');
-    }
-  </script>
-</body>
-</html>
+      width
